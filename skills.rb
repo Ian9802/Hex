@@ -1,3 +1,4 @@
+require_relative 'cube'
 # just have to make sure this is initialized, should probably be shifted to like a 'battle'
 # file at some point in the future
 $creatures = Array.new(7)
@@ -14,8 +15,8 @@ def nameThySelf
 	puts @name + "!"
 end
 
-def randomSelection
-	localCreatures = Array.new($creatures)
+def randomSelection(creatureList)
+	localCreatures = Array.new(creatureList)
 	teamCount = 0
 	teamList = Array.new
 	for i in localCreatures
@@ -40,14 +41,40 @@ def randomSelection
 	return {targetTeam: targetTeam, target: target}
 end
 
-def randomAttack
-	selected = randomSelection()
+def localAttack
+	adjacentList = listAdjacents
+	adjacents = Array.new()
+	listCount = 0
+	for list in $creatures
+		creatureCount = 0
+		for i in list
+			for j in adjacentList
+				if j.equals(i.getloc)
+					adjacents.push({targetTeam: listCount, target: creatureCount})
+					break
+				end
+			end
+			creatureCount += 1
+		end
+		listCount += 1
+	end
+	for selected in adjacents
+		standardAttack(selected)
+	end
+end
+
+def standardAttack(selected)
 	targetTeam = selected[:targetTeam]
 	target = selected[:target]
 	$creatures[targetTeam][target].defend(@atk)
 	if $creatures[targetTeam][target].dead()
 		$creatures[targetTeam].delete_at(target)
 	end
+end
+
+def randomAttack
+	selected = randomSelection($creatures)
+	standardAttack(selected)
 end
 
 def complete

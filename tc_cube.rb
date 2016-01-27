@@ -1,4 +1,4 @@
-require_relative "grid"
+require_relative "cube"
 require "test/unit"
 
 class TestGrid < Test::Unit::TestCase
@@ -62,43 +62,43 @@ class TestGrid < Test::Unit::TestCase
 	def test_tl_adj
 		center = Cube.new(0,0)
 		tl = Cube.new(-1, 1)
-		assert_equal(true, center.adjacent(tl))
+		assert_equal(true, center.isAdjacent(tl))
 	end
 
 	def test_tr_adj
 		center = Cube.new(0,0)
 		tr = Cube.new(0, 1)
-		assert_equal(true, center.adjacent(tr))
+		assert_equal(true, center.isAdjacent(tr))
 	end
 
 	def test_cl_adj
 		center = Cube.new(0,0)
 		cl = Cube.new(-1, 0)
-		assert_equal(true, center.adjacent(cl))
+		assert_equal(true, center.isAdjacent(cl))
 	end
 
 	def test_cr_adj
 		center = Cube.new(0,0)
 		cr = Cube.new(0, 1)
-		assert_equal(true, center.adjacent(cr))
+		assert_equal(true, center.isAdjacent(cr))
 	end
 
 	def test_bl_adj
 		center = Cube.new(0,0)
 		bl = Cube.new(0, -1)
-		assert_equal(true, center.adjacent(bl))
+		assert_equal(true, center.isAdjacent(bl))
 	end
 
 	def test_br_adj
 		center = Cube.new(0,0)
 		br = Cube.new(1, -1)
-		assert_equal(true, center.adjacent(br))
+		assert_equal(true, center.isAdjacent(br))
 	end
 
 	def test_not_adj
 		subject1 = Cube.new(4, 3)
 		subject2 = Cube.new(-8, 2)
-		assert_equal(false, subject1.adjacent(subject2))
+		assert_equal(false, subject1.isAdjacent(subject2))
 	end
 
 	def test_line

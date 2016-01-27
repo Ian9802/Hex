@@ -31,7 +31,7 @@ class Cube
 		Cube.new(1, 0)
 	]
 	# Could also be a line length 1, leaving as is for now
-	def adjacent(target)
+	def isAdjacent(target)
 		if self.add(@@directions[0]).equals(target)
 			return true
 		elsif self.add(@@directions[1]).equals(target)
@@ -47,6 +47,16 @@ class Cube
 		else
 			return false
 		end
+	end
+	def listAdjacents
+		locations = Array.new()
+		locations.push(self.add(@@directions[0]))
+		locations.push(self.add(@@directions[1]))
+		locations.push(self.add(@@directions[2]))
+		locations.push(self.add(@@directions[3]))
+		locations.push(self.add(@@directions[4]))
+		locations.push(self.add(@@directions[5]))
+		return locations
 	end
 	def distance(target)
 		return [(@x - target.getx).abs, (@y - target.gety).abs, (@z - target.getz)].max

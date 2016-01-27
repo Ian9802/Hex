@@ -1,6 +1,7 @@
 require_relative 'skills'
+require_relative 'cube'
 class Being
-	def initialize(name, hp, mp, atk, dfs, matk, mdfs, spd, skillList, team)
+	def initialize(name, hp, mp, atk, dfs, matk, mdfs, spd, skillList, team, loc)
 		@name = name
 		@hp = hp
 		@mp = mp
@@ -11,6 +12,7 @@ class Being
 		@spd = spd
 		@skillList = skillList
 		@team = team
+		@loc = loc
 	end
 
 	def getname; return @name; end
@@ -53,6 +55,14 @@ class Being
 	# This one doesn't even really make sense
 	def adjustteam(mod); @team += team; end
 
+	def getloc
+		return @loc
+	end
+	def setloc(loc)
+		@loc = loc
+	end
+
+
 	def dead()
 		return @hp<=0
 	end
@@ -93,7 +103,8 @@ class Rando < Being
 			(rand()*4).round(0) + 1,
 			[method(:nameThySelf)],
 			# this could also be (rand()*4).round(0) +1 to prevent friendly rando's
-			(rand()*5).round(0)
+			(rand()*5).round(0),
+			Cube.new(0,0)
 		)
 	end
 end

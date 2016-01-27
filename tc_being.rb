@@ -1,9 +1,10 @@
-require_relative "being"
+require_relative 'being'
+require_relative 'cube'
 require "test/unit"
 
 class TestBeing < Test::Unit::TestCase
 	def test_get_frank
-		frank = Being.new("frank", 4, 10, 100, 50, 100, 50, 4, [method(:alo)], 1)
+		frank = Being.new("frank", 4, 10, 100, 50, 100, 50, 4, [method(:alo)], 1, Cube.new(0,0))
 		assert_equal("frank", frank.getname)
 		assert_equal(4, frank.gethp)
 		assert_equal(10, frank.getmp)
@@ -14,6 +15,7 @@ class TestBeing < Test::Unit::TestCase
 		assert_equal(4, frank.getspd)
 		assert_equal(method(:alo), frank.getskillList[0])
 		assert_equal(1, frank.getteam)
+		assert(frank.getloc.equals(Cube.new(0,0)))
 
 		assert_equal("hoi", frank.getskillList[0].call)
 	end

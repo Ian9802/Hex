@@ -2,7 +2,7 @@ require_relative "grid"
 require "test/unit"
 
 class TestGrid < Test::Unit::TestCase
-	def creation_center
+	def test_creation_center
 		center = Cube.new(0, 0)
 		assert_equal(0, center.getx)
 		assert_equal(0, center.gety)
@@ -20,7 +20,7 @@ class TestGrid < Test::Unit::TestCase
 		assert_equal(1, zno.getz)
 	end
 
-	def nonzero_creation
+	def test_nonzero_creation
 		subject1 = Cube.new(4, 3)
 		assert_equal(4, subject1.getx)
 		assert_equal(3, subject1.gety)
@@ -31,7 +31,7 @@ class TestGrid < Test::Unit::TestCase
 		assert_equal(6, subject2.getz)
 	end
 
-	def large_creation
+	def test_large_creation
 		subject1 = Cube.new(234324, -1245)
 		assert_equal(234324, subject1.getx)
 		assert_equal(-1245, subject1.gety)
@@ -42,62 +42,96 @@ class TestGrid < Test::Unit::TestCase
 		assert_equal(0, subject2.getz)
 	end
 
-	def add_test
+	def test_add
 		subject1 = Cube.new(4, 3)
 		subject2 = Cube.new(-8, 2)
 		result = subject1.add(subject2)
-		assert_equal(-4, subject2.getx)
-		assert_equal(5, subject2.gety)
-		assert_equal(-1, subject2.getz)
+		assert_equal(-4, result.getx)
+		assert_equal(5, result.gety)
+		assert_equal(-1, result.getz)
 	end
 
-	def equal_test
+	def test_equal
 		subject1 = Cube.new(4, 3)
-		assert(true, subject1.equal(Cube.new(4, 3)))
+		assert_equal(true, subject1.equals(Cube.new(4, 3)))
 		subject2 = Cube.new(-8, 2)
-		assert(true, subject1.equal(Cube.new(-8, 2)))
-		assert(false, subject1.equal(subject2))
+		assert_equal(true, subject2.equals(Cube.new(-8, 2)))
+		assert_equal(false, subject1.equals(subject2))
 	end
 
-	def tl_adj
+	def test_tl_adj
 		center = Cube.new(0,0)
 		tl = Cube.new(-1, 1)
-		assert(true, center.adjacent(tl))
+		assert_equal(true, center.adjacent(tl))
 	end
 
-	def tr_adj
+	def test_tr_adj
 		center = Cube.new(0,0)
 		tr = Cube.new(0, 1)
-		assert(true, center.adjacent(tr))
+		assert_equal(true, center.adjacent(tr))
 	end
 
-	def cl_adj
+	def test_cl_adj
 		center = Cube.new(0,0)
 		cl = Cube.new(-1, 0)
-		assert(true, center.adjacent(cl))
+		assert_equal(true, center.adjacent(cl))
 	end
 
-	def cr_adj
+	def test_cr_adj
 		center = Cube.new(0,0)
 		cr = Cube.new(0, 1)
-		assert(true, center.adjacent(cr))
+		assert_equal(true, center.adjacent(cr))
 	end
 
-	def bl_adj
+	def test_bl_adj
 		center = Cube.new(0,0)
 		bl = Cube.new(0, -1)
-		assert(true, center.adjacent(bl))
+		assert_equal(true, center.adjacent(bl))
 	end
 
-	def br_adj
+	def test_br_adj
 		center = Cube.new(0,0)
 		br = Cube.new(1, -1)
-		assert(true, center.adjacent(br))
+		assert_equal(true, center.adjacent(br))
 	end
 
-	def not_adj
+	def test_not_adj
 		subject1 = Cube.new(4, 3)
 		subject2 = Cube.new(-8, 2)
-		assert(false, subject1.adjacent(subject2))
+		assert_equal(false, subject1.adjacent(subject2))
+	end
+
+	def test_line
+		center = Cube.new(0,0)
+		tl = Cube.new(-1, 1)
+		assert_equal(1, center.line(tl))
+
+		tr = Cube.new(0, 1)
+		assert_equal(1, center.line(tr))
+
+		cl = Cube.new(-1, 0)
+		assert_equal(1, center.line(cl))
+
+		cr = Cube.new(0, 1)
+		assert_equal(1, center.line(cr))
+
+		bl = Cube.new(0, -1)
+		assert_equal(1, center.line(bl))
+
+		br = Cube.new(1, -1)
+		assert_equal(1, center.line(br))
+
+		dist = Cube.new(15, -15)
+		assert_equal(15, center.line(dist))
+	end
+
+	def test_line_ext
+		subject1 = Cube.new(4, 3)
+		subject2 = Cube.new(-8, 2)
+		assert_equal(-1, subject1.line(subject2))
+
+		subject3 = Cube.new(17, -10)
+		assert_equal(13, subject1.line(subject3))
+		assert_equal(13, subject3.line(subject1))
 	end
 end

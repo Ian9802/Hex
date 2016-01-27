@@ -1,3 +1,4 @@
+include Enumerable
 class Cube
 	def initialize(x,y)
 		@x = x
@@ -29,6 +30,7 @@ class Cube
 		Cube.new(1, -1),
 		Cube.new(1, 0)
 	]
+	# Could also be a line length 1, leaving as is for now
 	def adjacent(target)
 		if self.add(@@directions[0]).equals(target)
 			return true
@@ -46,6 +48,25 @@ class Cube
 			return false
 		end
 	end
+	def distance(target)
+		return [(@x - target.getx).abs, (@y - target.gety).abs, (@z - target.getz)].max
+	end
+	def line(target)
+		if @x == target.getx
+			print "x"
+			return distance(target)
+		elsif @y == target.gety
+			print "y"
+			return distance(target)
+		elsif @z == target.getz
+			print "z"
+			return distance(target)
+		else
+			print "nope"
+			return -1
+		end
+	end
+			
 end
 
 # base = Cube.new(1, 0)

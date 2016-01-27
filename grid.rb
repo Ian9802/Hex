@@ -53,38 +53,19 @@ class Cube
 	end
 	def line(target)
 		if @x == target.getx
-			print "x"
 			return distance(target)
 		elsif @y == target.gety
-			print "y"
 			return distance(target)
 		elsif @z == target.getz
-			print "z"
 			return distance(target)
 		else
-			print "nope"
 			return -1
 		end
 	end
 			
 end
 
-# base = Cube.new(1, 0)
-# puts base.getx
-# puts base.gety
-# puts base.getz
-# shift = Cube.new(0, 1)
-# puts shift.getx
-# puts shift.gety
-# puts shift.getz
-# result = base.add(shift)
-# puts result.getx
-# puts result.gety
-# puts result.getz
 
-# puts base.equals(Cube.new(1,0))
-# puts base.adjacent(shift)
-# puts base.adjacent(Cube.new(3,0))
 
 # xlen = 7
 # ylen = 6

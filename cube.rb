@@ -80,6 +80,13 @@ class Cube
 		#anticlockwise
 		return Cube.new(-@y, -@z)
 	end
+	def == (other)
+		if other.class == Cube && self.equals(other)
+			return true
+		else
+			return false
+		end
+	end
 			
 end
 

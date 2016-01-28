@@ -134,4 +134,12 @@ class TestGrid < Test::Unit::TestCase
 		assert_equal(13, subject1.line(subject3))
 		assert_equal(13, subject3.line(subject1))
 	end
+
+	def test_doubleEquality
+		subject1 = Cube.new(0,0)
+		subject2 = Cube.new(0,0)
+		array = Array.new(1) {subject1}
+		assert(array.include? subject1)
+		assert(array.include? subject2)
+	end
 end

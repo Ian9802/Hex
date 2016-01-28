@@ -16,6 +16,9 @@ class Battle
 		end
 		return list
 	end
+	def removeCreature(being)
+		@creatures = @creatures[being.getTeam].delete_if{ |e| e == being }
+	end
 	def ringTargets(min, max, loc)
 		# max and min inclusive
 		targettedHexes = Array.new()
@@ -64,41 +67,43 @@ class Battle
 	end
 	def randomTargetSelection(creatureList, team, hitCount)
 		if hitCount <= 0; return []; end
-		availableCreatures = Array.new(creatureList)
+		creatureList
 		teamCount = 0
 		teamList = Array.new()
-		for i in availableCreatures
+		for i in creatureList
 			teamList.push(teamCount)
 			teamCount+=1
 		end
 		if team >= 0
-			availableCreatures.delete_at(team)
 			teamList.delete_at(team)
 		end
 		hits = 0
 		targets = Array.new()
 		begin
-			if availableCreatures.length == 0; return targets; end
+			if creatureList.length == 0; puts targets, "a"; return targets; end
 			# rand does not include the max
-			team = rand(availableCreatures.length)
-			if !availableCreatures[team].nil? && availableCreatures[team].length > 0
+			team = teamList[rand(teamList.length)]
+			# can still currently double target groups, but won't target own team
+			# leaving the second part of the if for if/when I know how to fix it elegantly
+			# not just basically rebuild the entire thing, but numbers
+			# that is, if it should be fixed and not be able to hit multiple times
+			if !creatureList[team].nil? && creatureList[team].length > 0
 				hits += 1
-				target = rand(availableCreatures[targetTeam].length)
+				target = rand(creatureList[team].length)
 				targets.push({team: team, target: target})
-				availableCreatures[team].delete_at(target)
 			else
-				availableCreatures.delete_at(team)
+				creatureList.delete_at(team)
 				teamList.delete_at(team)
 			end
 		end while hits < hitCount
 		return targets
 	end
 	def randomTargetAny
-		return randomTargetSelection(@creatures, -1)
+		return randomTargetSelection(@creatures, -1, 1)
 	end
 	def complete
 		count = 0
-		for i in @creatures
+		for i in (0..@creatures.length-1)
 			if !@creatures[i].nil?
 				if @creatures[i].length > 0
 					count+=1

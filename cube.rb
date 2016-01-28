@@ -72,6 +72,14 @@ class Cube
 			return -1
 		end
 	end
+	def rotateIn()
+		# clockwise
+		return Cube.new(-@z, -@x)
+	end
+	def rotateOut()
+		#anticlockwise
+		return Cube.new(-@y, -@z)
+	end
 			
 end
 

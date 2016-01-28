@@ -102,8 +102,9 @@ class Rando < Being
 			(rand()*70).round(0) + 10,
 			(rand()*4).round(0) + 1,
 			[method(:nameThySelf)],
-			# this could also be (rand()*4).round(0) +1 to prevent friendly rando's
-			(rand()*5).round(0),
+			# this could also be (rand()*5).round(0) to allow friendly rando's
+			(rand()*4).round(0) +1,
+			# needs to be changed after creation
 			Cube.new(0,0)
 		)
 	end

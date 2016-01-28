@@ -5,15 +5,15 @@ class Cube
 		@y = y 
 		@z = -x-y
 	end
-	def getx; return @x; end
-	def gety; return @y; end
-	def getz; return @z; end
+	def getX; return @x; end
+	def getY; return @y; end
+	def getZ; return @z; end
 	def add(shift)
-		return Cube.new(@x+shift.getx, @y+shift.gety)
+		return Cube.new(@x+shift.getX, @y+shift.getY)
 	end
 	def equals(target)
-		if @x == target.getx
-			if @y == target.gety
+		if @x == target.getX
+			if @y == target.getY
 				return true
 			else 
 				return false
@@ -59,14 +59,14 @@ class Cube
 		return locations
 	end
 	def distance(target)
-		return [(@x - target.getx).abs, (@y - target.gety).abs, (@z - target.getz)].max
+		return [(@x - target.getX).abs, (@y - target.getY).abs, (@z - target.getZ)].max
 	end
 	def line(target)
-		if @x == target.getx
+		if @x == target.getX
 			return distance(target)
-		elsif @y == target.gety
+		elsif @y == target.getY
 			return distance(target)
-		elsif @z == target.getz
+		elsif @z == target.getZ
 			return distance(target)
 		else
 			return -1

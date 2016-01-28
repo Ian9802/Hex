@@ -4,51 +4,51 @@ require "test/unit"
 class TestGrid < Test::Unit::TestCase
 	def test_creation_center
 		center = Cube.new(0, 0)
-		assert_equal(0, center.getx)
-		assert_equal(0, center.gety)
-		assert_equal(0, center.getz)
+		assert_equal(0, center.getX)
+		assert_equal(0, center.getY)
+		assert_equal(0, center.getZ)
 	end
 
 	def test_creation
 		ozn = Cube.new(1, 0)
-		assert_equal(1, ozn.getx)
-		assert_equal(0, ozn.gety)
-		assert_equal(-1, ozn.getz)
+		assert_equal(1, ozn.getX)
+		assert_equal(0, ozn.getY)
+		assert_equal(-1, ozn.getZ)
 		zno = Cube.new(0, -1)
-		assert_equal(0, zno.getx)
-		assert_equal(-1, zno.gety)
-		assert_equal(1, zno.getz)
+		assert_equal(0, zno.getX)
+		assert_equal(-1, zno.getY)
+		assert_equal(1, zno.getZ)
 	end
 
 	def test_nonzero_creation
 		subject1 = Cube.new(4, 3)
-		assert_equal(4, subject1.getx)
-		assert_equal(3, subject1.gety)
-		assert_equal(-7, subject1.getz)
+		assert_equal(4, subject1.getX)
+		assert_equal(3, subject1.getY)
+		assert_equal(-7, subject1.getZ)
 		subject2 = Cube.new(-8, 2)
-		assert_equal(-8, subject2.getx)
-		assert_equal(2, subject2.gety)
-		assert_equal(6, subject2.getz)
+		assert_equal(-8, subject2.getX)
+		assert_equal(2, subject2.getY)
+		assert_equal(6, subject2.getZ)
 	end
 
 	def test_large_creation
 		subject1 = Cube.new(234324, -1245)
-		assert_equal(234324, subject1.getx)
-		assert_equal(-1245, subject1.gety)
-		assert_equal(-233079, subject1.getz)
+		assert_equal(234324, subject1.getX)
+		assert_equal(-1245, subject1.getY)
+		assert_equal(-233079, subject1.getZ)
 		subject2 = Cube.new(-8888888, 8888888)
-		assert_equal(-8888888, subject2.getx)
-		assert_equal(8888888, subject2.gety)
-		assert_equal(0, subject2.getz)
+		assert_equal(-8888888, subject2.getX)
+		assert_equal(8888888, subject2.getY)
+		assert_equal(0, subject2.getZ)
 	end
 
 	def test_add
 		subject1 = Cube.new(4, 3)
 		subject2 = Cube.new(-8, 2)
 		result = subject1.add(subject2)
-		assert_equal(-4, result.getx)
-		assert_equal(5, result.gety)
-		assert_equal(-1, result.getz)
+		assert_equal(-4, result.getX)
+		assert_equal(5, result.getY)
+		assert_equal(-1, result.getZ)
 	end
 
 	def test_equal

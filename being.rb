@@ -15,50 +15,49 @@ class Being
 		@loc = loc
 	end
 
-	def getname; return @name; end
-	def gethp; return @hp; end
-	def getmp; return @mp; end
-	def getatk; return @atk; end
-	def getdfs; return @dfs; end
-	def getmatk; return @matk; end
-	def getmatk; return @matk; end
-	def getmdfs; return @mdfs; end
-	def getspd; return @spd; end
-	def getskillList; return @skillList; end
-	def getteam; return @team; end
+	def getName; return @name; end
+	def getHp; return @hp; end
+	def getMp; return @mp; end
+	def getAtk; return @atk; end
+	def getDfs; return @dfs; end
+	def getMatk; return @matk; end
+	def getMdfs; return @mdfs; end
+	def getSpd; return @spd; end
+	def getSkillList; return @skillList; end
+	def getTeam; return @team; end
 
-	def setname(mod); @name = mod; end
-	def sethp(mod); @hp = mod; end
-	def setmp(mod); @mp = mod; end
-	def setatk(mod); @atk = mod; end
-	def setdfs(mod); @dfs = mod; end
-	def setmatk(mod); @matk = mod; end
-	def setmatk(mod); @matk = mod; end
-	def setmdfs(mod); @mdfs = mod; end
-	def setspd(mod); @spd = mod; end
-	def setskillList(mod); @skillList = mod; end
-	def setteam(mod); @team = mod; end
+	def setName(mod); @name = mod; end
+	def setHp(mod); @hp = mod; end
+	def setMp(mod); @mp = mod; end
+	def setAtk(mod); @atk = mod; end
+	def setDfs(mod); @dfs = mod; end
+	def setMatk(mod); @matk = mod; end
+	def setMatk(mod); @matk = mod; end
+	def setMdfs(mod); @mdfs = mod; end
+	def setSpd(mod); @spd = mod; end
+	def setSkillList(mod); @skillList = mod; end
+	def setTeam(mod); @team = mod; end
 
 	# This one doesn't even really make sense
-	def adjustname(mod); @name += name; end
-	def adjusthp(mod); @hp += mod; end
-	def adjustmp(mod); @mp += mod; end
-	def adjustatk(mod); @atk += mod; end
-	def adjustdfs(mod); @dfs += mod; end
-	def adjustmatk(mod); @matk += mod; end
-	def adjustmatk(mod); @matk += mod; end
-	def adjustmdfs(mod); @mdfs += mod; end
-	def adjustspd(mod); @spd += mod; end
+	def adjustName(mod); @name += name; end
+	def adjustHp(mod); @hp += mod; end
+	def adjustMp(mod); @mp += mod; end
+	def adjustAtk(mod); @atk += mod; end
+	def adjustDfs(mod); @dfs += mod; end
+	def adjustMatk(mod); @matk += mod; end
+	def adjustMatk(mod); @matk += mod; end
+	def adjustMdfs(mod); @mdfs += mod; end
+	def adjustSpd(mod); @spd += mod; end
 	# This one should probably be more complex, but leaving it for now, 
 	# especially as it's an example.
-	def adjustskillList(mod); @skillList += mod; end
+	def adjustSkillList(mod); @skillList += mod; end
 	# This one doesn't even really make sense
-	def adjustteam(mod); @team += team; end
+	def adjustTeam(mod); @team += team; end
 
-	def getloc
+	def getLoc
 		return @loc
 	end
-	def setloc(loc)
+	def setLoc(loc)
 		@loc = loc
 	end
 

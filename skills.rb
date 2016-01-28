@@ -1,16 +1,4 @@
 require_relative 'cube'
-# just have to make sure this is initialized, should probably be shifted to like a 'battle'
-# file at some point in the future
-$creatures = Array.new(7)
-# 0 PC 1-5 monster 6 reserved for solo beasts
-for i in (0..($creatures.length-1)) do
-	$creatures[i] = Array.new()
-end
-def inputCreature(being)
-	($creatures[being.getteam]).push(being)
-end
-
-#-----
 def alo
 	return "hoi"
 end

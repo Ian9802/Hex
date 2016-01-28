@@ -86,8 +86,12 @@ class Being
 		# speed btw would be like literal steps as it currently stands
 		return points > @spd *7.5
 	end
-	def activate(funciton)
-		function.call
+	# apparently this does not now, nor will it ever, work
+	# def activate(funciton)
+	# 	function.call
+	# end
+	def activate()
+		@skillList[0].call
 	end
 end
 

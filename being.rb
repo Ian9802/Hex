@@ -69,15 +69,17 @@ class Being
 		# This would need to be modified depending on how stats work
 		result = points - @dfs
 		if result > 0
-			adjusthp(-result)
+			adjustHp(-result)
 		end
+		return self
 	end
 	def mdefend(points)
 		# ^^
 		result = points - @mdfs
 		if result > 0
-			adjusthp(-result)
+			adjustHp(-result)
 		end
+		return self
 	end
 	def dodge(points)
 		# not even 100% sure what *I* mean here
@@ -85,12 +87,11 @@ class Being
 		# speed btw would be like literal steps as it currently stands
 		return points > @spd *7.5
 	end
-	# apparently this does not now, nor will it ever, work
-	# def activate(funciton)
-	# 	function.call
-	# end
-	def activate()
-		@skillList[0].call
+	# should have an input for which to call, but this is testing.
+	# probably also .call(args)
+	def activate(number, args)
+		args = args.merge({source: self})
+		(@skillList[number]).call(args)
 	end
 end
 

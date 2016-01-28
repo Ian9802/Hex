@@ -1,50 +1,98 @@
-# require_relative 'skills'
-# require_relative 'being'
-# require_relative 'cube'
-# require "test/unit"
-# This whole thing is going to stay a mess until battle is sorted out, because it really needs it
-# class TestSkillsFull < Test::Unit::TestCase
-# 	def setup
-# 		establishCreatures()
-# 		@randoList = Array.new()
-# 		for i in (0..37)
-# 			@randoList.push(Rando.new())
-# 		end
-# 		counter = 0
-# 		for i in (-3..3)
-# 			for j in (-3..(3-(i.abs)))
-# 				@randoList[counter].setloc(Cube.new(i,j))
-# 				inputCreature(@randoList[counter])
-# 				counter+=1
-# 			end
-# 		end
-# 		# @beast = @randoList[19]
-# 		# @beast.setteam(0)
-# 		# @beast.setskillList([send(:randomSelection, $creatures)])
-# 	end
+require_relative 'skills'
+require_relative 'being'
+require_relative 'cube'
+require_relative 'battle'
+require "test/unit"
 
-# 	def teardown
-# 		$creatures.clear()
-# 	end
+class TestSkillsFull < Test::Unit::TestCase
+	def test_localAttack
+		battle = Battle.new()
+		rando1 = Rando.new()
+		rando1.setTeam(0)
+		rando1.setLoc(Cube.new(0,0))
+		rando1.setSkillList([method(:localAttack)])
+		prior1 = rando1.getHp
 
-# 	def test_setup
-# 	end
+		rando2 = Rando.new()
+		rando2.setLoc(Cube.new(1,0))
+		rando2.setDfs(0)
+		rando2.setTeam(1)
+		prior2 = rando2.getHp
 
-# 	def test_randomSelection
-# 		# @team = 0
-# 		# assert(!randomSelection($creatures).nil?)
-# 		# @team = @beast.getteam()
-# 		# assert(!@beast.activate().nil?)
-# 		# assert(!@beast.activate(randomSelection($creatures)).nil?)
-# 		# assert(!@beast.activate(randomSelection($creatures)).nil?)
-# 		# assert(!@beast.activate(randomSelection($creatures)).nil?)
-# 		# assert(!@beast.activate(randomSelection($creatures)).nil?)
-# 	end
+		rando3 = Rando.new()
+		rando3.setLoc(Cube.new(1,1))
+		rando3.setDfs(0)
+		rando3.setTeam(1)
+		prior3 = rando3.getHp
 
-# 	# def test_rangedRandomAttack
-# 	# 	@loc = Cube.new(0,0)
-# 	# 	rangedRandomAttack[]
-# 	# end
+		battle.addCreature(rando1)
+		battle.addCreature(rando2)
+		battle.addCreature(rando3)
 
-# end
+		args = {battle: battle}
+		battle.getCreatures[0][0].activate(0, args)
+		assert(prior1 == battle.getCreatures[0][0].getHp)
+		assert(prior2 >  battle.getCreatures[1][0].getHp)
+		assert(prior3 == battle.getCreatures[1][1].getHp)
+	end
+	def test_randomAttack
+		battle = Battle.new()
+		rando1 = Rando.new()
+		rando1.setTeam(0)
+		rando1.setLoc(Cube.new(0,0))
+		rando1.setSkillList([method(:randomAttack)])
+		prior1 = rando1.getHp
 
+		rando2 = Rando.new()
+		rando2.setLoc(Cube.new(1,0))
+		rando2.setDfs(0)
+		rando2.setTeam(1)
+		prior2 = rando2.getHp
+
+		rando3 = Rando.new()
+		rando3.setLoc(Cube.new(1,1))
+		rando3.setDfs(0)
+		rando3.setTeam(0)
+		prior3 = rando3.getHp
+
+		battle.addCreature(rando1)
+		battle.addCreature(rando2)
+		battle.addCreature(rando3)
+
+		args = {battle: battle}
+		battle.getCreatures[0][0].activate(0, args)
+		assert(prior1 == battle.getCreatures[0][0].getHp)
+		assert(prior2 >  battle.getCreatures[1][0].getHp)
+		assert(prior3 == battle.getCreatures[0][1].getHp)
+	end
+	def test_rangedAttack
+		battle = Battle.new()
+		rando1 = Rando.new()
+		rando1.setTeam(0)
+		rando1.setLoc(Cube.new(0,0))
+		rando1.setSkillList([method(:rangedAttack)])
+		prior1 = rando1.getHp
+
+		rando2 = Rando.new()
+		rando2.setLoc(Cube.new(1,0))
+		rando2.setDfs(0)
+		rando2.setTeam(1)
+		prior2 = rando2.getHp
+
+		rando3 = Rando.new()
+		rando3.setLoc(Cube.new(1,1))
+		rando3.setDfs(0)
+		rando3.setTeam(1)
+		prior3 = rando3.getHp
+
+		battle.addCreature(rando1)
+		battle.addCreature(rando2)
+		battle.addCreature(rando3)
+
+		args = {battle: battle, min: 2, max: 2}
+		battle.getCreatures[0][0].activate(0, args)
+		assert(prior1 == battle.getCreatures[0][0].getHp)
+		assert(prior2 == battle.getCreatures[1][0].getHp)
+		assert(prior3 >  battle.getCreatures[1][1].getHp)
+	end
+end

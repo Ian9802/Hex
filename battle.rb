@@ -19,6 +19,13 @@ class Battle
 	def removeCreature(being)
 		@creatures = @creatures[being.getTeam].delete_if{ |e| e == being }
 	end
+	# these too hopefully won't be use much, if at all
+	def findCreature(being)
+		return @creatures.index(being)
+	end
+	def setCreature(being, location)
+		@creatures[being.getTeam][location] = being
+	end
 	def ringTargets(min, max, loc)
 		# max and min inclusive
 		targettedHexes = Array.new()
@@ -42,6 +49,7 @@ class Battle
 		end
 		return targettedHexes
 	end
+	# needs to be modified to produce {team, target}
 	def getTargets(targettedHexes)
 		targets = Array.new(7)
 		teamCount = 0
@@ -80,7 +88,7 @@ class Battle
 		hits = 0
 		targets = Array.new()
 		begin
-			if creatureList.length == 0; puts targets, "a"; return targets; end
+			if creatureList.length == 0; return targets; end
 			# rand does not include the max
 			team = teamList[rand(teamList.length)]
 			# can still currently double target groups, but won't target own team
@@ -92,7 +100,6 @@ class Battle
 				target = rand(creatureList[team].length)
 				targets.push({team: team, target: target})
 			else
-				creatureList.delete_at(team)
 				teamList.delete_at(team)
 			end
 		end while hits < hitCount

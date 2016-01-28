@@ -1,53 +1,58 @@
 require_relative 'cube'
-def alo
+def alo(args)
 	return "hoi"
 end
-def nameThySelf
+def nameThySelf(args)
 	puts @name + "!"
 end
 
 # hits all locals, spin to win
-def localAttack
-	targettedHexes = listAdjacents
-	targets = findTargets(targettedHexes)
-	for selected in targets
-		standardAttack(selected)
+def localAttack(args)
+	battle = args[:battle]
+	source = args[:source]
+	hexes = battle.ringTargets(1, 1, source.getLoc)
+	targets = battle.getTargets(hexes)
+	hitAll(battle, targets, source)
+end
+
+# needs to be fixed up so that it can have {team, target}
+def hitAll(battle, targets, source)
+	for team in targets
+		if !team.nil?
+			for target in team
+				target.defend(source.getAtk)
+			end
+		end
 	end
 end
 
-def standardAttack(selected)
-	targetTeam = selected[:targetTeam]
+# also a maybe, and might need to change depending on how variables are handles
+# might need an assign function in battle to force updates
+def standardAttack(battle, selected, source)
+	team = selected[:team]
 	target = selected[:target]
-	$creatures[targetTeam][target].defend(@atk)
-	if $creatures[targetTeam][target].dead()
-		$creatures[targetTeam].delete_at(target)
+	battle.getCreatures[team][target].defend(source.getAtk)
+	if battle.getCreatures[team][target].dead()
+		battle.remove(battle.getCreatures[team][target])
 	end
 end
 
-def randomAttack
-	selected = randomSelection($creatures)
-	standardAttack(selected)
+# only targets enemies, randomTargetAny for anyone
+# single attack, can be modified for other skills
+def randomAttack(args)
+	battle = args[:battle]
+	source = args[:source]
+	selected = battle.randomTargetSelection(battle.getCreatures, source.getTeam, 1)
+	standardAttack(battle, selected[0], source)
 end
 
-def rangedRandomAttack(range)
-	# range probably needs to be set in the creature for how this currently works
-	# could also set a lower limit to make it so that they could ONLY attack at range
-	# targettedHexes = Array.new()
-	# if range <= 0; return targettedHexes; end
-	# for i in (1..range)
-	# 	shiftCube = Cube.new(i, 0)
-	# 	target = @loc.add(shiftCube)
-	# 	targettedHexes.push(target)
-	# 	for j in (1..5)
-	# 		target = target.rotateIn()
-	# 		targettedHexes.push(target)
-	# 	end
-	# end
-	# targets = findTargets(targettedHexes)
-	for selected in targets
-		standardAttack(selected)
-	end
+# hits all targets in a range of areas.
+def rangedAttack(args)
+	battle = args[:battle]
+	source = args[:source]
+	min = args[:min]
+	max = args[:max]
+	hexes = battle.ringTargets(min, max, source.getLoc)
+	targets = battle.getTargets(hexes)
+	hitAll(battle, targets, source)
 end
-
-
-

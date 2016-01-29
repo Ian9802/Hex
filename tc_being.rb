@@ -17,8 +17,8 @@ class TestBeing < Test::Unit::TestCase
 		assert_equal(1, frank.getTeam)
 		assert(frank.getLoc.equals(Cube.new(0,0)))
 
-		assert_equal("hoi", frank.getSkillList[0].call([]))
-		assert_equal("hoi", frank.activate(0, []))
+		assert_equal("hoi", frank.getSkillList[0].call({}))
+		assert_equal("hoi", frank.activate(0, {}))
 	end
 
 	def test_rando

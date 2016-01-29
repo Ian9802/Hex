@@ -20,7 +20,7 @@ def hitAll(battle, targets, source)
 	for team in targets
 		if !team.nil?
 			for target in team
-				target.defend(source.getAtk)
+				standardAttack(battle, target, source)
 			end
 		end
 	end
@@ -42,7 +42,7 @@ end
 def randomAttack(args)
 	battle = args[:battle]
 	source = args[:source]
-	selected = battle.randomTargetSelection(battle.getCreatures, source.getTeam, 1)
+	selected = battle.randomTargetSelection(battle.getCreaturesAsTargets, source.getTeam, 1)
 	standardAttack(battle, selected[0], source)
 end
 

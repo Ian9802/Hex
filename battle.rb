@@ -9,10 +9,13 @@ class Battle
 		@creatures = addCreatureRaw(being, @creatures)
 	end
 	def addCreatureRaw(being, list)
-		if(list[being.getTeam].nil?)
-			list[being.getTeam] = Array.new(1) {being}
+		return addCreatureBrutal(being, being.getTeam, list)
+	end
+	def addCreatureBrutal(being, team, list)
+		if(list[team].nil?)
+			list[team] = Array.new(1) {being}
 		else
-			list[being.getTeam].push(being)
+			list[team].push(being)
 		end
 		return list
 	end
@@ -49,8 +52,23 @@ class Battle
 		end
 		return targettedHexes
 	end
-	# needs to be modified to produce {team, target}
+	def getCreaturesAsTargets
+		targets = Array.new(7)
+		teamCount = 0
+		for list in @creatures
+			creatureCount = 0
+			if(!list.nil?)
+				for i in list
+					targets = addCreatureBrutal({team: teamCount, target: creatureCount}, teamCount, targets)
+					creatureCount += 1
+				end
+			end
+			teamCount += 1
+		end
+		return targets
+	end
 	def getTargets(targettedHexes)
+		# targets = Array.new()
 		targets = Array.new(7)
 		teamCount = 0
 		hexes = targettedHexes
@@ -60,7 +78,9 @@ class Battle
 				for i in list
 					for j in hexes
 						if j.equals(i.getLoc)
-							targets = addCreatureRaw(@creatures[teamCount][creatureCount], targets)
+							# targets.push({team: teamCount, target: creatureCount})
+							# targets = addCreatureRaw(@creatures[teamCount][creatureCount], targets)
+							targets = addCreatureBrutal({team: teamCount, target: creatureCount}, teamCount, targets)
 							# if there can only be one creature on a hex
 							# hexes = hexes - [j]
 							break
@@ -75,7 +95,6 @@ class Battle
 	end
 	def randomTargetSelection(creatureList, team, hitCount)
 		if hitCount <= 0; return []; end
-		creatureList
 		teamCount = 0
 		teamList = Array.new()
 		for i in creatureList
@@ -98,7 +117,7 @@ class Battle
 			if !creatureList[team].nil? && creatureList[team].length > 0
 				hits += 1
 				target = rand(creatureList[team].length)
-				targets.push({team: team, target: target})
+				targets.push({team: team, target: creatureList[team][target][:target]})
 			else
 				teamList.delete_at(team)
 			end
@@ -106,7 +125,7 @@ class Battle
 		return targets
 	end
 	def randomTargetAny
-		return randomTargetSelection(@creatures, -1, 1)
+		return randomTargetSelection(self.getCreaturesAsTargets, -1, 1)
 	end
 	def complete
 		count = 0

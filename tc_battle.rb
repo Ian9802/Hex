@@ -134,10 +134,14 @@ class TestBattle < Test::Unit::TestCase
 		for i in (2..7)
 			assert(targets[i].nil?)
 		end
-		assert(targets[0].include?(being1))
-		assert(targets[0].include? being2)
-		assert(targets[1].include? being3)
-		assert(!(targets.include? being4))
+		b1 = {team: 0, target: 0}
+		b2 = {team: 0, target: 1}
+		b3 = {team: 1, target: 0}
+		b4 = {team: 1, target: 1}
+		assert(targets[0].include? b1)
+		assert(targets[0].include? b2)
+		assert(targets[1].include? b3)
+		assert(!(targets.include? b4))
 	end
 	def test_randomTargetSelection
 		battle = Battle.new()
@@ -157,20 +161,21 @@ class TestBattle < Test::Unit::TestCase
 		being3.setLoc(Cube.new(0,0))
 		battle.addCreature(being3)
 
-		target = battle.randomTargetSelection(battle.getCreatures, 0, 0)
+		target = battle.randomTargetSelection(battle.getCreaturesAsTargets, 0, 0)
 		assert_equal(0, target.length)
 
-		target = battle.randomTargetSelection(battle.getCreatures, 0, 1)
+		target = battle.randomTargetSelection(battle.getCreaturesAsTargets, 0, 1)
 		selected = target[0]
 		creature = battle.getCreatures[selected[:team]][selected[:target]]
 		assert_equal(1, target.length)
 		assert_equal(being3, creature)
 
-		target = battle.randomTargetSelection(battle.getCreatures, 0, 2)
+		target = battle.randomTargetSelection(battle.getCreaturesAsTargets, 0, 2)
 		selected = target[0]
 		creature = battle.getCreatures[selected[:team]][selected[:target]]
 		assert_equal(2, target.length)
 		assert_equal(being3, creature)
+
 		selected = target[1]
 		creature = battle.getCreatures[selected[:team]][selected[:target]]
 		assert_equal(2, target.length)
